@@ -1,0 +1,9 @@
+Flask>=3.0,<4.0
+
+
+cd ".\dronepad_app\dronepad_app"
+py -m venv .venv
+.\.venv\Scripts\Activate.ps1
+.\.venv\Scripts\Activate.ps1
+pip install Flask
+py app.py

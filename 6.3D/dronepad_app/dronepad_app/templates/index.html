@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2 class="h">Search available drone pad slots</h2>
+<form method="post" action="/search" class="card">
+  <div class="row">
+    <label>Zone</label>
+    <select name="zone">
+      <option value="A">A</option>
+      <option value="B">B</option>
+    </select>
+  </div>
+  <div class="row">
+    <label>Payload class</label>
+    <select name="payload_class">
+      <option value="S">S</option>
+      <option value="M">M</option>
+      <option value="L">L</option>
+    </select>
+  </div>
+  <div class="row">
+    <label>Turnaround (minutes)</label>
+    <select name="turnaround">
+      <option>5</option>
+      <option>10</option>
+      <option>15</option>
+    </select>
+  </div>
+  <div class="row">
+    <label>Start</label>
+    <input type="text" name="start" value="{{ default_start }}" placeholder="YYYY-MM-DD HH:MM"/>
+  </div>
+  <div class="row">
+    <label>End</label>
+    <input type="text" name="end" value="{{ default_end }}" placeholder="YYYY-MM-DD HH:MM"/>
+  </div>
+  <div class="actions">
+    <button type="submit">Search</button>
+  </div>
+</form>
+{% endblock %}

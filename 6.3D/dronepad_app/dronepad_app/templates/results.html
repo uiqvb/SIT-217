@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2 class="h">Results for Zone {{ zone }}, Payload {{ payload_class }}, Turnaround {{ turnaround }} min</h2>
+<p class="muted">Window: {{ start }} to {{ end }}</p>
+
+{% if results|length == 0 %}
+<div class="card"><p>No slots found. Try a different time window or payload class.</p></div>
+{% endif %}
+
+{% for group in results %}
+  <div class="card">
+    <h3>{{ group.pad.name }} (Zone {{ group.pad.zone }})</h3>
+    <table>
+      <thead><tr><th>Start</th><th>End</th><th></th></tr></thead>
+      <tbody>
+      {% for s in group.slots %}
+        <tr>
+          <td>{{ s.start.strftime("%Y-%m-%d %H:%M") }}</td>
+          <td>{{ s.end.strftime("%Y-%m-%d %H:%M") }}</td>
+          <td>
+            <form method="post" action="/reserve">
+              <input type="hidden" name="pad_id" value="{{ group.pad.id }}"/>
+              <input type="hidden" name="start" value="{{ s.start.strftime("%Y-%m-%d %H:%M") }}"/>
+              <input type="hidden" name="end" value="{{ s.end.strftime("%Y-%m-%d %H:%M") }}"/>
+              <input type="hidden" name="payload_class" value="{{ payload_class }}"/>
+              <button type="submit">Reserve</button>
+            </form>
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endfor %}
+{% endblock %}

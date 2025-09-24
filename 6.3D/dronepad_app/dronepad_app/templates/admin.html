@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2 class="h">Operator console</h2>
+
+<div class="card">
+  <h3>Pads</h3>
+  <table>
+    <thead><tr><th>ID</th><th>Name</th><th>Zone</th><th>Payloads</th><th>Turnaround</th><th>Separation</th><th>Out of service</th><th>Action</th></tr></thead>
+    <tbody>
+      {% for p in pads %}
+      <tr>
+        <td>{{ p.id }}</td>
+        <td>{{ p.name }}</td>
+        <td>{{ p.zone }}</td>
+        <td>{{ p.payload_classes }}</td>
+        <td>{{ p.turnaround_minutes }} min</td>
+        <td>{{ p.separation_seconds }} s</td>
+        <td>{{ 'Yes' if p.out_of_service else 'No' }}</td>
+        <td>
+          <form method="post">
+            <input type="hidden" name="pad_id" value="{{ p.id }}"/>
+            <input type="hidden" name="action" value="toggle_oos"/>
+            <button type="submit" class="secondary">Toggle OOS</button>
+          </form>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<div class="card">
+  <h3>Upcoming reservations</h3>
+  {% if upcoming|length == 0 %}
+    <p class="muted">None</p>
+  {% else %}
+  <table>
+    <thead><tr><th>ID</th><th>Pad</th><th>Zone</th><th>Start</th><th>End</th><th>Status</th></tr></thead>
+    <tbody>
+      {% for r in upcoming %}
+      <tr>
+        <td>{{ r.id }}</td>
+        <td>{{ r.pad_name }}</td>
+        <td>{{ r.zone }}</td>
+        <td>{{ r.start_ts }}</td>
+        <td>{{ r.end_ts }}</td>
+        <td>{{ r.status }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+</div>
+{% endblock %}

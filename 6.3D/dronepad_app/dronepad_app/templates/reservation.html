@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="card">
+  <h2>Reservation</h2>
+  <p><strong>ID:</strong> {{ r.id }}</p>
+  <p><strong>Pad:</strong> {{ r.pad_name }} (Zone {{ r.pad_zone }})</p>
+  <p><strong>Payload class:</strong> {{ r.payload_class }}</p>
+  <p><strong>Window:</strong> {{ r.start_ts }} → {{ r.end_ts }}</p>
+  <p><strong>Status:</strong> {{ r.status }}</p>
+  {% if r.checkin_ts %}<p><strong>Check-in at:</strong> {{ r.checkin_ts }}</p>{% endif %}
+  <div class="actions">
+    <form method="post" action="/reservation/{{ r.id }}/checkin" style="display:inline;">
+      <button type="submit">Check-in</button>
+    </form>
+    <form method="post" action="/reservation/{{ r.id }}/release" style="display:inline;margin-left:8px;">
+      <button type="submit" class="secondary">Release</button>
+    </form>
+  </div>
+</div>
+{% endblock %}
